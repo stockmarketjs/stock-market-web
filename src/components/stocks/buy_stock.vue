@@ -1,32 +1,21 @@
 <template>
-  <el-form ref="form"
-           :model="form"
-           label-width="80px">
+  <el-form ref="form" :model="form" label-width="80px">
     <el-form-item label="股票ID">
-      <el-input v-model="form.stockId" />
+      <el-input v-model="form.stockId"/>
     </el-form-item>
     <el-form-item label="股数">
-      <el-input-number v-model="form.amount"
-                       :precision="0"
-                       :step="1"
-                       :min="0"></el-input-number>
+      <el-input-number v-model="form.amount" :precision="0" :step="1" :min="0"></el-input-number>
     </el-form-item>
     <el-form-item label="价格">
-      <el-input-number v-model="form.price"
-                       :precision="2"
-                       :step="0.1"
-                       :min="0.00"></el-input-number>
+      <el-input-number v-model="form.price" :precision="2" :step="0.1" :min="0.00"></el-input-number>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary"
-                 @click="buy">买</el-button>
+      <el-button type="primary" @click="buy">买</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import { buy } from '../../graphql/order.gql'
-
 export default {
   created() {
     this.form.stockId = this.$route.params.stockId
@@ -40,7 +29,7 @@ export default {
       }
     }
   },
-  mounted(){
+  mounted() {
     this.checkAuth()
   },
   methods: {
@@ -51,19 +40,15 @@ export default {
       }
     },
     async buy() {
-      const { data } = await this.$apollo.mutate({
-        mutation: buy,
-        fetchPolicy: 'no-cache',
-        variables: {
-          data: {
-            stockId: this.form.stockId,
-            price: this.form.price,
-            amount: this.form.amount,
-            userId: this.$store.state.userId,
-            mode: 'LIMIT'
-          }
+      const { data } = await this.axios.post(
+        `api/stocks/${this.form.stockId}/buy`,
+        {
+          price: this.form.price,
+          hand: this.form.amount,
+          // userId: this.$store.state.userId,
+          // mode: 'LIMIT'
         }
-      })
+      )
       this.stock = data.stock
     }
   }

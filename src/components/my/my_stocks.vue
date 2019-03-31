@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import USER_STOCKS_GET from '../../graphql/user_stocks_get.gql'
-
 export default {
   data() {
     return {
@@ -29,16 +27,8 @@ export default {
   },
   methods: {
     async getUserStocks() {
-      const { data } = await this.$apollo.query({
-        query: USER_STOCKS_GET,
-        fetchPolicy: 'no-cache',
-        variables: {
-          data: {
-            userId: this.$store.state.userId
-          }
-        }
-      })
-      this.userStocks = data.userStocks.userStocks
+      const { data } = await this.axios.get(`api/users/${this.$store.state.userId}/stocks`)
+      this.userStocks = data
     }
   }
 }

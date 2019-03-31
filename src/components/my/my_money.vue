@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import USER_MONEY_GET from '../../graphql/user_money_get.gql'
-
 export default {
   data() {
     return {
@@ -26,18 +24,9 @@ export default {
   },
   methods: {
     async getCash() {
-      const { data } = await this.$apollo.query({
-        query: USER_MONEY_GET,
-        fetchPolicy: 'no-cache',
-        variables: {
-          data: {
-            cashType: 'CNY',
-            userId: this.$store.state.userId
-          }
-        }
-      })
-      const cny = this._.find(data.userMoneys.userMoneys, { cashType: 'CNY' })
-      this.cny = cny ? cny.cash : 0
+      const { data } = await this.axios.get(`api/users/${this.$store.state.userId}/capitals`)
+      const cny = data[0];
+      this.cny = cny.cash
     }
   }
 }

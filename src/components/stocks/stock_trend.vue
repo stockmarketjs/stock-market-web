@@ -1,14 +1,11 @@
 <template>
   <div>
     {{$route.params.stockId}}
-    <ve-line :data="chartData"
-             :settings="chartSettings" />
+    <ve-line :data="chartData" :settings="chartSettings"/>
   </div>
 </template>
 
 <script>
-import STOCK_TRENDS from '../../graphql/stock_trends.gql'
-
 export default {
   data() {
     return {
@@ -42,17 +39,14 @@ export default {
   },
   methods: {
     async getStockTrends() {
-      const { data } = await this.$apollo.query({
-        query: STOCK_TRENDS,
-        fetchPolicy: 'no-cache',
-        variables: {
-          data: {
-            stockId: this.$route.params.stockId,
-            date: this.moment().format('YYYY-MM-DD')
-          }
-        }
-      })
-      this.stockTrends = data.stockTrends.stockTrends
+      if (!this.$route.params.stockId) {
+        clearInterval(this.timer)
+        return
+      }
+      const { data } = await this.axios.get(
+        `api/stocks/${this.$route.params.stockId}/orders`
+      )
+      this.stockTrends = data
       this.chartData.rows = this.stockTrends
     }
   }

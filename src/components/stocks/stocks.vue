@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="stocks.stocks"
+  <el-table :data="stocks"
             stripe
             @row-click="showStock"
             style="width: 100%">
@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import STOCKS from '../../graphql/stocks.gql'
-
 export default {
   async mounted() {
     await this.getStocks()
@@ -26,11 +24,8 @@ export default {
       this.$router.push(`/stock/${stock.id}`)
     },
     async getStocks() {
-      const { data } = await this.$apollo.query({
-        query: STOCKS,
-        fetchPolicy: 'no-cache',
-      })
-      this.stocks = data.stocks
+      const { data } = await this.axios.get('api/stocks')
+      this.stocks = data
     }
   },
   data() {
