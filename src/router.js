@@ -9,6 +9,9 @@ import MyStockOrders from './views/my/my_stock_orders.vue'
 import axios from 'axios'
 import store from './store'
 import Vue from 'vue'
+import About from './views/About.vue'
+import Feature from './views/features.vue'
+import Announcement from './views/announcements.vue'
 
 Vue.use(Router)
 
@@ -22,12 +25,12 @@ const router = new Router({
     {
       path: '/about',
       name: 'about',
-      component: () => import('./views/About.vue')
+      component: About
     },
     {
       path: '/features',
       name: 'feature',
-      component: () => import('./views/features.vue')
+      component: Feature
     },
     {
       path: '/my_money',
@@ -66,7 +69,7 @@ const router = new Router({
     {
       path: '/announcements',
       name: 'announcement',
-      component: () => import('./views/announcements.vue')
+      component: Announcement
     },
     {
       path: '/auth/login',
