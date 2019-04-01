@@ -24,8 +24,12 @@ export default {
     }
   },
   methods: {
-    register() {
-      alert('尚未开放注册, 联系管理员获取测试帐号')
+    async register() {
+      const { data } = await this.axios.post('api/auth/register', {
+        account: this.form.account,
+        password: this.form.password
+      })
+      alert('注册成功')
     },
     async login() {
       const { data } = await this.axios.post('api/auth/login', {

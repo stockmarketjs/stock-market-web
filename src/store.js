@@ -3,17 +3,21 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-function loadFromLocalStorage(key) {
-  return JSON.parse(window.localStorage.getItem(key));
+function loadFromCookies(key) {
+  var arr = document.cookie.match(new RegExp("(^| )" + key + "=([^;]*)(;|$)"));
+  if (arr != null) {
+    return unescape(arr[2]);
+  }
+  return null;
 }
 
-function saveFromLocalStorage(key, value) {
-  return window.localStorage.setItem(key, JSON.stringify(value));
+function saveFromCookies(key, value) {
+  document.cookie = key + "=" + JSON.stringify(value);
 }
 
 export default new Vuex.Store({
   state: {
-    token: loadFromLocalStorage('token') || '',
+    token: loadFromCookies('token') || '',
     userId: null,
   },
   mutations: {
@@ -22,7 +26,7 @@ export default new Vuex.Store({
     },
     setToken(state, value) {
       state.token = value;
-      saveFromLocalStorage('token', value);
+      saveFromCookies('token', value);
     },
   },
   actions: {
