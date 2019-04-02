@@ -44,11 +44,12 @@ export default {
         `api/stocks/${this.form.stockId}/sold`,
         {
           price: this.form.price,
-          hand: this.form.amount,
+          hand: this.form.amount
           // userId: this.$store.state.userId,
           // mode: 'LIMIT'
         }
       )
+      alert('卖出成功')
       this.stock = data.stock
     }
   }

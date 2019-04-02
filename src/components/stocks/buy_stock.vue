@@ -49,6 +49,7 @@ export default {
           // mode: 'LIMIT'
         }
       )
+      alert('购买成功')
       this.stock = data.stock
     }
   }

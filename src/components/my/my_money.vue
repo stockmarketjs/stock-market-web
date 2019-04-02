@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     async createCapital() {
-      const { data } = await this.axios.post(
+      await this.axios.post(
         `api/users/${this.$store.state.userId}/capitals`
       )
       await this.getCash()

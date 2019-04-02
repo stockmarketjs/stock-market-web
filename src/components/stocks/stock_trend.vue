@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{$route.params.stockId}}
     <ve-line :data="chartData" :settings="chartSettings"/>
   </div>
 </template>
