@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-timeline :reverse="reverse">
+    <el-timeline>
       <el-timeline-item
         v-for="(soldShift, index) in soldShifts"
         :key="index"
       >卖{{soldShift.shift}} {{soldShift.hand}}手 ￥{{soldShift.price}}</el-timeline-item>
     </el-timeline>
-    <el-timeline :reverse="reverse">
+    <el-timeline>
       <el-timeline-item
         v-for="(buyShift, index) in buyShifts"
         :key="index"
@@ -19,13 +19,22 @@
 export default {
   data() {
     return {
+      timer: null,
       buyShifts: [],
       soldShifts: []
     }
   },
   mounted() {
     this.checkAuth()
+  },
+  created() {
     this.findAllShift()
+    this.timer = setInterval(() => {
+      this.findAllShift()
+    }, 5000)
+  },
+  destroyed() {
+    clearInterval(this.timer)
   },
   methods: {
     async checkAuth() {

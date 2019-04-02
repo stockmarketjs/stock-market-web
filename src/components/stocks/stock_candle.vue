@@ -16,26 +16,20 @@ export default {
           'highestPrice'
         ],
         rows: []
-      },
+      }
     }
   },
-  async created() {
-    this.timer = setInterval(async () => {
-      await this.getStockCandles()
+  created() {
+    this.getStockCandles()
+    this.timer = setInterval(() => {
+      this.getStockCandles()
     }, 5000)
   },
-  async updated() {
+  destroyed() {
     clearInterval(this.timer)
-  },
-  async mounted() {
-    await this.getStockCandles()
   },
   methods: {
     async getStockCandles() {
-      if (!this.$route.params.stockId) {
-        clearInterval(this.timer)
-        return
-      }
       const { data } = await this.axios.get(
         `api/stocks/${this.$route.params.stockId}/histories`
       )

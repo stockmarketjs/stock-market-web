@@ -25,23 +25,17 @@ export default {
       }
     }
   },
-  async created() {
-    this.timer = setInterval(async () => {
-      await this.getStockTrends()
+  created() {
+    this.getStockTrends()
+    this.timer = setInterval(() => {
+      this.getStockTrends()
     }, 5000)
   },
-  async updated() {
+  destroyed() {
     clearInterval(this.timer)
-  },
-  async mounted() {
-    await this.getStockTrends()
   },
   methods: {
     async getStockTrends() {
-      if (!this.$route.params.stockId) {
-        clearInterval(this.timer)
-        return
-      }
       const { data } = await this.axios.get(
         `api/stocks/${this.$route.params.stockId}/orders`
       )

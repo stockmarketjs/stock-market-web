@@ -24,23 +24,20 @@ export default {
       }
     }
   },
-  async created() {
-    this.timer = setInterval(async () => {
-      await this.getStock()
+  created() {
+    this.getStock()
+    this.timer = setInterval(() => {
+      this.getStock()
     }, 5000)
   },
-  async updated() {
+  destroyed() {
     clearInterval(this.timer)
-  },
-  beforeDestroy(){
-    clearInterval(this.timer)
-  },
-  async mounted() {
-    await this.getStock()
   },
   methods: {
     async getStock() {
-      const { data } = await this.axios.get(`api/stocks/${this.$route.params.stockId}`)
+      const { data } = await this.axios.get(
+        `api/stocks/${this.$route.params.stockId}`
+      )
       this.stock = data
     }
   }

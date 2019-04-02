@@ -30,9 +30,7 @@ export default {
   },
   data() {
     return {
-      stocks: {
-        stocks: []
-      }
+      stocks: []
     }
   }
 }
