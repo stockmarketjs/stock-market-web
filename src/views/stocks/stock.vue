@@ -5,7 +5,6 @@
     <el-button type="text" @click="soldDialogVisible = true">卖</el-button>
     <CStockShift/>
     <CStockTrend/>
-    <p>尚未支持K线图</p>
     <CStockCandle/>
     <el-dialog title="操作" :visible.sync="buyDialogVisible" width="30%">
       <CBuyStock/>
