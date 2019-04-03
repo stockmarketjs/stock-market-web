@@ -10,7 +10,7 @@
       <el-timeline-item
         v-for="(buyShift, index) in buyShifts"
         :key="index"
-      >买{{buyShift.shift}} {{buyShift.shift}}手 ￥{{buyShift.price}}</el-timeline-item>
+      >买{{buyShift.shift}} {{buyShift.hand}}手 ￥{{buyShift.price}}</el-timeline-item>
     </el-timeline>
   </div>
 </template>
@@ -24,9 +24,6 @@ export default {
       soldShifts: []
     }
   },
-  mounted() {
-    this.checkAuth()
-  },
   created() {
     this.findAllShift()
     this.timer = setInterval(() => {
@@ -37,12 +34,6 @@ export default {
     clearInterval(this.timer)
   },
   methods: {
-    async checkAuth() {
-      if (!this.$store.state.userId) {
-        alert('未登录，请先登录')
-        this.$router.push(`/auth/login`)
-      }
-    },
     async findAllShift() {
       const { data: buyData } = await this.axios.get(
         `api/stocks/${this.$route.params.stockId}/orders/buy_shifts`
