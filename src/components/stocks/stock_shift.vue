@@ -42,7 +42,7 @@ export default {
       const { data: soldData } = await this.axios.get(
         `api/stocks/${this.$route.params.stockId}/orders/sold_shifts`
       )
-      this.soldShifts = soldData
+      this.soldShifts = soldData.reverse()
     }
   }
 }
