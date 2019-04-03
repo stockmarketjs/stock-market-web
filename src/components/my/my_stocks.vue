@@ -1,17 +1,9 @@
 <template>
-  <el-table :data="userStocks"
-            stripe
-            style="width: 100%">
-    <el-table-column prop="stock.name"
-                     label="股票名称"
-                     width="180" />
-    <el-table-column prop="userId"
-                     label="用户ID"
-                     width="180" />
-    <el-table-column prop="costPrice"
-                     label="均价" />
-    <el-table-column prop="amount"
-                     label="股数" />
+  <el-table :data="userStocks" stripe style="width: 100%">
+    <el-table-column prop="stock.name" label="股票名称" width="180"/>
+    <el-table-column prop="costPrice" label="均价"/>
+    <el-table-column prop="amount" label="股数"/>
+    <el-table-column prop="createdAt" label="日期"/>
   </el-table>
 </template>
 
@@ -27,8 +19,10 @@ export default {
   },
   methods: {
     async getUserStocks() {
-      const { data } = await this.axios.get(`api/users/${this.$store.state.userId}/stocks`)
-      this.userStocks = data
+      const { data } = await this.axios.get(
+        `api/users/${this.$store.state.userId}/stocks`
+      )
+      this.userStocks = this._.filter(data, item => item.amount !== 0)
     }
   }
 }
