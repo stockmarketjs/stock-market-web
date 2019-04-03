@@ -82,7 +82,11 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.meta.login) {
     if (store.state.token && !store.state.userId) {
-      axios.get('api/auth/user').then(res => {
+      axios.get('api/auth/user', {
+        headers: {
+          Authorization: store.state.token
+        }
+      }).then(res => {
         if (!res.data.id) {
           store.commit('setToken', null)
           alert('未登录，请先登录')

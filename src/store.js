@@ -6,7 +6,7 @@ Vue.use(Vuex)
 function loadFromCookies(key) {
   var arr = document.cookie.match(new RegExp("(^| )" + key + "=([^;]*)(;|$)"));
   if (arr != null) {
-    return unescape(arr[2]);
+    return JSON.parse(unescape(arr[2]));
   }
   return null;
 }
