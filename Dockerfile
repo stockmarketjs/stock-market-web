@@ -13,3 +13,4 @@ FROM daocloud.io/library/nginx:1.13.0-alpine
 MAINTAINER  zhouyu muyu.zhouyu@outlook.com
 COPY --from=builder dist dist/
 COPY --from=builder web.conf etc/nginx/conf.d/
+RUN apk add -U tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && apk del tzdata
