@@ -3,7 +3,7 @@
     <el-form-item label="股票ID">
       <el-input v-model="form.stockId"/>
     </el-form-item>
-    <el-form-item label="股数">
+    <el-form-item label="手数">
       <el-input-number v-model="form.amount" :precision="0" :step="1" :min="0"></el-input-number>
     </el-form-item>
     <el-form-item label="价格">

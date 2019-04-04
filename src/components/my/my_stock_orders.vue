@@ -44,11 +44,17 @@ export default {
   },
   methods: {
     async cancel(userStockOrder) {
-      await this.axios.post(
-        `api/users/${this.$store.state.userId}/stock_orders/${
-          userStockOrder.id
-        }/cancel`
-      )
+      try {
+        await this.axios.post(
+          `api/users/${this.$store.state.userId}/stock_orders/${
+            userStockOrder.id
+          }/cancel`
+        )
+        alert('撤单成功')
+      } catch (e) {
+        alert('撤单失败')
+      }
+      await this.getUserStockOrders()
     },
     async getUserStockOrders() {
       const { data } = await this.axios.get(
