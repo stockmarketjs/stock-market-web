@@ -1,5 +1,5 @@
 <template>
-  <ve-candle :data="chartData"/>
+  <ve-candle :data="chartData" :settings="chartSettings"/>
 </template>
 
 <script>
@@ -7,6 +7,10 @@ export default {
   data() {
     return {
       timer: null,
+      chartSettings: {
+        showMA: true,
+        showVol: true
+      },
       chartData: {
         columns: [
           'date',
