@@ -8,6 +8,7 @@ export default {
     return {
       timer: null,
       chartSettings: {
+        scale: [true, true],
         showMA: true,
         showVol: true
       },

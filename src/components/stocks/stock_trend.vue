@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ve-line :data="chartData" :settings="chartSettings"/>
+    <ve-line :data="chartData" :settings="chartSettings" :extend="chartExtend"/>
   </div>
 </template>
 
@@ -9,12 +9,23 @@ export default {
   data() {
     return {
       timer: null,
+      chartExtend: {
+        series(v) {
+          v.forEach(i => {
+            i.smooth = true
+            i.showSymbol = false
+          })
+          return v
+        }
+      },
       stockTrends: [],
       chartData: {
         columns: ['minute', 'amount', 'price'],
         rows: []
       },
       chartSettings: {
+        scale: [true, true],
+        // area: true,
         metrics: ['price'],
         dimension: ['minute'],
         labelMap: {
