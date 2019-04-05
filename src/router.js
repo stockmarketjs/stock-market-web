@@ -12,6 +12,8 @@ import Vue from 'vue'
 import About from './views/About.vue'
 import Feature from './views/features.vue'
 import Announcement from './views/announcements.vue'
+import MarketSummary from './views/summary/market_summary.vue'
+import RankSummary from './views/summary/rank_summary.vue'
 
 Vue.use(Router)
 
@@ -47,6 +49,16 @@ const router = new Router({
       meta: {
         login: true,
       }
+    },
+    {
+      path: '/summary/market',
+      name: 'MarketSummary',
+      component: MarketSummary
+    },
+    {
+      path: '/summary/rank',
+      name: 'RankSummary',
+      component: RankSummary
     },
     {
       path: '/my_stock_orders',

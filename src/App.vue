@@ -12,13 +12,13 @@
             <router-link to="/announcements">公告</router-link>
           </el-menu-item>
           <el-menu-item index="1-2">
-            <router-link to="/">市场情况</router-link>
+            <router-link to="/summary/market">市场情况</router-link>
           </el-menu-item>
           <el-menu-item index="1-3">
             <router-link to="/">市场调研</router-link>
           </el-menu-item>
           <el-menu-item index="1-4">
-            <router-link to="/">排行榜</router-link>
+            <router-link to="/summary/rank">排行榜</router-link>
           </el-menu-item>
         </el-submenu>
         <el-submenu index="2">

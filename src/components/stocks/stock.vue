@@ -1,5 +1,6 @@
 <template>
   <div>
+    <i class="el-icon-back" @click="backStocks"></i>
     <p>{{stock.name}}</p>
     <el-tag>市场 {{stock.market==='sh'?'沪市':'深市'}}</el-tag>
     <el-tag>当前价 {{stock.currentPrice}}</el-tag>
@@ -35,6 +36,10 @@ export default {
     clearInterval(this.timer)
   },
   methods: {
+    backStocks() {
+      const redirect = decodeURIComponent(this.$route.query.redirect_url || '/')
+      this.$router.push(redirect)
+    },
     async getStock() {
       const { data } = await this.axios.get(
         `api/stocks/${this.$route.params.stockId}`
