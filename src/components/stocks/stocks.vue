@@ -13,6 +13,15 @@ export default {
   async mounted() {
     await this.getStocks()
   },
+  created() {
+    this.getStocks()
+    this.timer = setInterval(() => {
+      this.getStocks()
+    }, 5000)
+  },
+  destroyed() {
+    clearInterval(this.timer)
+  },
   methods: {
     showStock(stock) {
       this.$router.push(`/stock/${stock.id}`)
@@ -21,14 +30,14 @@ export default {
       const { data } = await this.axios.get('api/stocks')
       this.stocks = data.map(v => {
         v.market = v.market === 'sh' ? '沪市' : '深市'
-        v.changePer =
-          this._.round((v.change / v.currentPrice) * 100, 2) + '%'
+        v.changePer = this._.round((v.change / v.currentPrice) * 100, 2) + '%'
         return v
       })
     }
   },
   data() {
     return {
+      timer: null,
       stocks: []
     }
   }
