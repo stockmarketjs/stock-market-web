@@ -6,7 +6,7 @@ COPY src src/
 COPY web.conf .
 COPY .eslintrc.js .
 COPY .editorconfig .
-RUN npm install
+RUN npm install --registry=https://registry.npm.taobao.org
 RUN npm run build
 
 FROM daocloud.io/library/nginx:1.13.0-alpine
