@@ -43,7 +43,7 @@ export default {
             this.findAllBuyShift()
           }, 5000)
         }).catch(e=>{
-           this.timer = setTimeout(() => {
+           this.timer1 = setTimeout(() => {
             this.findAllBuyShift()
           }, 10000)
         })
@@ -57,7 +57,7 @@ export default {
             this.findAllSoldShift()
           }, 5000)
         }).catch(e=>{
-           this.timer = setTimeout(() => {
+           this.timer2 = setTimeout(() => {
             this.findAllSoldShift()
           }, 10000)
         })
