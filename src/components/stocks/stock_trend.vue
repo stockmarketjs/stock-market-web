@@ -20,7 +20,7 @@ export default {
       },
       stockTrends: [],
       chartData: {
-        columns: ['minute', 'amount', 'price'],
+        columns: ['minute', 'price'],
         rows: []
       },
       chartSettings: {
@@ -30,7 +30,6 @@ export default {
         dimension: ['minute'],
         labelMap: {
           minute: '时间',
-          amount: '量',
           price: '价格'
         }
       }
@@ -52,6 +51,10 @@ export default {
           this.timer = setTimeout(() => {
             this.getStockTrends()
           }, 5000)
+        }).catch(e=>{
+           this.timer = setTimeout(() => {
+            this.getStockTrends()
+          }, 10000)
         })
     }
   }

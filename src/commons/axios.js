@@ -14,4 +14,11 @@ axios.interceptors.request.use(
         return Promise.reject(error)
     });
 
+axios.interceptors.response.use(
+    config => config,
+    error => {
+        // if (error.response.status === 500) alert('服务器出小差了')
+        return Promise.reject(error)
+    });
+
 export default axios

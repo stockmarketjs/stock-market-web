@@ -39,6 +39,10 @@ export default {
           this.timer = setTimeout(() => {
             this.getStockCandles()
           }, 5000)
+        }).catch(e=>{
+           this.timer = setTimeout(() => {
+            this.getStockCandles()
+          }, 10000)
         })
     }
   }

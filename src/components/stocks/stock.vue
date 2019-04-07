@@ -43,7 +43,11 @@ export default {
         this.timer = setTimeout(() => {
           this.getStock()
         }, 5000)
-      })
+      }).catch(e=>{
+           this.timer = setTimeout(() => {
+            this.getStock()
+          }, 10000)
+        })
     }
   }
 }

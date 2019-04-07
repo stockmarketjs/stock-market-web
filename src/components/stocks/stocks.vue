@@ -33,7 +33,11 @@ export default {
         this.timer = setTimeout(() => {
           this.getStocks()
         }, 5000)
-      })
+      }).catch(e=>{
+           this.timer = setTimeout(() => {
+            this.getStocks()
+          }, 10000)
+        })
     }
   },
   data() {
