@@ -28,23 +28,22 @@ export default {
   },
   created() {
     this.getStock()
-    this.timer = setInterval(() => {
-      this.getStock()
-    }, 5000)
   },
   destroyed() {
-    clearInterval(this.timer)
+    clearTimeout(this.timer)
   },
   methods: {
     backStocks() {
       const redirect = decodeURIComponent(this.$route.query.redirect_url || '/')
       this.$router.push(redirect)
     },
-    async getStock() {
-      const { data } = await this.axios.get(
-        `api/stocks/${this.$route.params.stockId}`
-      )
-      this.stock = data
+    getStock() {
+      this.axios.get(`api/stocks/${this.$route.params.stockId}`).then(res => {
+        this.stock = res.data
+        this.timer = setTimeout(() => {
+          this.getStock()
+        }, 5000)
+      })
     }
   }
 }

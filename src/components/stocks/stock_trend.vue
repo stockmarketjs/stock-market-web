@@ -38,20 +38,21 @@ export default {
   },
   created() {
     this.getStockTrends()
-    this.timer = setInterval(() => {
-      this.getStockTrends()
-    }, 5000)
   },
   destroyed() {
-    clearInterval(this.timer)
+    clearTimeout(this.timer)
   },
   methods: {
-    async getStockTrends() {
-      const { data } = await this.axios.get(
-        `api/stocks/${this.$route.params.stockId}/orders`
-      )
-      this.stockTrends = data
-      this.chartData.rows = this.stockTrends
+    getStockTrends() {
+      this.axios
+        .get(`api/stocks/${this.$route.params.stockId}/orders`)
+        .then(res => {
+          this.stockTrends = res.data
+          this.chartData.rows = this.stockTrends
+          this.timer = setTimeout(() => {
+            this.getStockTrends()
+          }, 5000)
+        })
     }
   }
 }

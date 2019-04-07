@@ -26,19 +26,20 @@ export default {
   },
   created() {
     this.getStockCandles()
-    this.timer = setInterval(() => {
-      this.getStockCandles()
-    }, 5000)
   },
   destroyed() {
-    clearInterval(this.timer)
+    clearTimeout(this.timer)
   },
   methods: {
-    async getStockCandles() {
-      const { data } = await this.axios.get(
-        `api/stocks/${this.$route.params.stockId}/histories`
-      )
-      this.chartData.rows = data
+    getStockCandles() {
+      this.axios
+        .get(`api/stocks/${this.$route.params.stockId}/histories`)
+        .then(res => {
+          this.chartData.rows = res.data
+          this.timer = setTimeout(() => {
+            this.getStockCandles()
+          }, 5000)
+        })
     }
   }
 }

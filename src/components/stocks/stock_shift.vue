@@ -19,30 +19,40 @@
 export default {
   data() {
     return {
-      timer: null,
+      timer1: null,
+      timer2: null,
       buyShifts: [],
       soldShifts: []
     }
   },
   created() {
-    this.findAllShift()
-    this.timer = setInterval(() => {
-      this.findAllShift()
-    }, 5000)
+    this.findAllBuyShift()
+    this.findAllSoldShift()
   },
   destroyed() {
-    clearInterval(this.timer)
+    clearTimeout(this.timer1)
+    clearTimeout(this.timer2)
   },
   methods: {
-    async findAllShift() {
-      const { data: buyData } = await this.axios.get(
-        `api/stocks/${this.$route.params.stockId}/orders/buy_shifts`
-      )
-      this.buyShifts = buyData
-      const { data: soldData } = await this.axios.get(
-        `api/stocks/${this.$route.params.stockId}/orders/sold_shifts`
-      )
-      this.soldShifts = soldData.reverse()
+    findAllBuyShift() {
+      this.axios
+        .get(`api/stocks/${this.$route.params.stockId}/orders/buy_shifts`)
+        .then(res => {
+          this.buyShifts = res.data
+          this.timer1 = setTimeout(() => {
+            this.findAllBuyShift()
+          }, 5000)
+        })
+    },
+    findAllSoldShift() {
+      this.axios
+        .get(`api/stocks/${this.$route.params.stockId}/orders/sold_shifts`)
+        .then(res => {
+          this.soldShifts = res.data.reverse()
+          this.timer2 = setTimeout(() => {
+            this.findAllSoldShift()
+          }, 5000)
+        })
     }
   }
 }
