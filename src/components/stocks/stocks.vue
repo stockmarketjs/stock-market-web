@@ -10,9 +10,6 @@
 
 <script>
 export default {
-  async mounted() {
-    await this.getStocks()
-  },
   created() {
     this.getStocks()
   },
