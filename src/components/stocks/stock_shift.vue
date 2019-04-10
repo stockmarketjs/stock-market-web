@@ -1,17 +1,15 @@
 <template>
   <div>
-    <el-timeline>
-      <el-timeline-item
-        v-for="(soldShift, index) in soldShifts"
-        :key="index"
-      >卖{{soldShift.shift}} {{soldShift.hand}}手 ￥{{soldShift.price}}</el-timeline-item>
-    </el-timeline>
-    <el-timeline>
-      <el-timeline-item
-        v-for="(buyShift, index) in buyShifts"
-        :key="index"
-      >买{{buyShift.shift}} {{buyShift.hand}}手 ￥{{buyShift.price}}</el-timeline-item>
-    </el-timeline>
+    <el-table :data="soldShifts">
+      <el-table-column prop="shift" :formatter="soldShiftFormat"></el-table-column>
+      <el-table-column prop="price" :formatter="priceFormat"></el-table-column>
+      <el-table-column prop="hand" :formatter="handFormat"></el-table-column>
+    </el-table>
+    <el-table :data="buyShifts">
+      <el-table-column prop="shift" :formatter="buyShiftFormat"></el-table-column>
+      <el-table-column prop="price" :formatter="priceFormat"></el-table-column>
+      <el-table-column prop="hand" :formatter="handFormat"></el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -34,6 +32,18 @@ export default {
     clearTimeout(this.timer2)
   },
   methods: {
+    buyShiftFormat: function(row, column) {
+      return `买${row.shift}`
+    },
+    soldShiftFormat: function(row, column) {
+      return `卖${row.shift}`
+    },
+    handFormat: function(row, column) {
+      return `${row.hand}手`
+    },
+    priceFormat: function(row, column) {
+      return `￥${row.price}`
+    },
     findAllBuyShift() {
       this.axios
         .get(`api/stocks/${this.$route.params.stockId}/orders/buy_shifts`)
@@ -42,8 +52,9 @@ export default {
           this.timer1 = setTimeout(() => {
             this.findAllBuyShift()
           }, 5000)
-        }).catch(e=>{
-           this.timer1 = setTimeout(() => {
+        })
+        .catch(e => {
+          this.timer1 = setTimeout(() => {
             this.findAllBuyShift()
           }, 10000)
         })
@@ -56,8 +67,9 @@ export default {
           this.timer2 = setTimeout(() => {
             this.findAllSoldShift()
           }, 5000)
-        }).catch(e=>{
-           this.timer2 = setTimeout(() => {
+        })
+        .catch(e => {
+          this.timer2 = setTimeout(() => {
             this.findAllSoldShift()
           }, 10000)
         })

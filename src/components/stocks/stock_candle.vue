@@ -1,15 +1,25 @@
 <template>
-  <ve-candle :data="chartData" :settings="chartSettings"/>
+  <ve-candle :data="chartData" :settings="chartSettings" :loading="loading" :extend="chartExtend"/>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      loading: true,
       timer: null,
+       chartExtend: {
+        series(v) {
+          v.forEach(i => {
+            i.smooth = true
+            i.showSymbol = false
+          })
+          return v
+        }
+      },
       chartSettings: {
         scale: [true, true],
-        showMA: true,
+        showMA: false,
         showVol: true
       },
       chartData: {
@@ -25,6 +35,7 @@ export default {
     }
   },
   created() {
+    this.loading = true
     this.getStockCandles()
   },
   destroyed() {
@@ -36,11 +47,13 @@ export default {
         .get(`api/stocks/${this.$route.params.stockId}/histories`)
         .then(res => {
           this.chartData.rows = res.data
+          this.loading = false
           this.timer = setTimeout(() => {
             this.getStockCandles()
           }, 5000)
-        }).catch(e=>{
-           this.timer = setTimeout(() => {
+        })
+        .catch(e => {
+          this.timer = setTimeout(() => {
             this.getStockCandles()
           }, 10000)
         })

@@ -1,11 +1,17 @@
 <template>
   <div>
     <CStock/>
-    <el-button type="text" @click="buyDialogVisible = true">买</el-button>
-    <el-button type="text" @click="soldDialogVisible = true">卖</el-button>
-    <CStockShift/>
-    <CStockTrend/>
-    <CStockCandle/>
+    <el-button type="primary" icon="el-icon-download" @click="buyDialogVisible = true">买进</el-button>
+    <el-button type="primary" icon="el-icon-upload2" @click="soldDialogVisible = true">卖出</el-button>
+    <el-row>
+      <el-col :span="18">
+        <CStockTrend/>
+        <CStockCandle/>
+      </el-col>
+      <el-col :span="6">
+        <CStockShift/>
+      </el-col>
+    </el-row>
     <el-dialog title="操作" :visible.sync="buyDialogVisible" width="30%">
       <CBuyStock/>
     </el-dialog>

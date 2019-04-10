@@ -1,10 +1,11 @@
 <template>
   <div>
-    <ve-line :data="chartData" :settings="chartSettings" :extend="chartExtend"/>
+    <ve-line :data="chartData" :settings="chartSettings" :extend="chartExtend" :loading="loading"/>
   </div>
 </template>
 
 <script>
+import 'v-charts/lib/style.css'
 export default {
   data() {
     return {
@@ -18,11 +19,11 @@ export default {
           return v
         }
       },
-      stockTrends: [],
       chartData: {
         columns: ['minute', 'price'],
         rows: []
       },
+      loading: true,
       chartSettings: {
         scale: [true, true],
         // area: true,
@@ -36,6 +37,7 @@ export default {
     }
   },
   created() {
+    this.loading = true
     this.getStockTrends()
   },
   destroyed() {
@@ -46,13 +48,19 @@ export default {
       this.axios
         .get(`api/stocks/${this.$route.params.stockId}/orders`)
         .then(res => {
-          this.stockTrends = res.data
-          this.chartData.rows = this.stockTrends
+          this.chartData.rows = res.data.minutePrices.map(item => {
+            return {
+              minute: item[0],
+              price: item[1]
+            }
+          })
+          this.loading = false
           this.timer = setTimeout(() => {
             this.getStockTrends()
           }, 5000)
-        }).catch(e=>{
-           this.timer = setTimeout(() => {
+        })
+        .catch(e => {
+          this.timer = setTimeout(() => {
             this.getStockTrends()
           }, 10000)
         })
