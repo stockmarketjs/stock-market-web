@@ -2,7 +2,7 @@
   <el-table
     :data="userStockOrders"
     stripe
-    :default-sort="{prop: 'updatedAt', order: 'ascending'}"
+    :default-sort="{prop: 'updatedAt', order: 'descending'}"
     style="width: 100%"
   >
     <el-table-column prop="stock.name" sortable label="股票名称"/>

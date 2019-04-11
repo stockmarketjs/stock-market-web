@@ -24,7 +24,7 @@ export default {
       this.axios.get('api/stocks').then(res => {
         this.stocks = res.data.map(v => {
           v.market = v.market === 'sh' ? '沪市' : '深市'
-          v.changePer = this._.round((v.change / v.currentPrice) * 100, 2) + '%'
+          v.changePer = this._.round((v.change / v.startPrice) * 100, 2) + '%'
           return v
         })
         this.timer = setTimeout(() => {
