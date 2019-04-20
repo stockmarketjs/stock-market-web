@@ -38,13 +38,16 @@ export default {
       this.$router.push(redirect)
     },
     getStock() {
-      this.axios.get(`api/stocks/${this.$route.params.stockId}`).then(res => {
-        this.stock = res.data
-        this.timer = setTimeout(() => {
-          this.getStock()
-        }, 5000)
-      }).catch(e=>{
-           this.timer = setTimeout(() => {
+      this.axios
+        .get(`api/stocks/${this.$route.params.stockId}`)
+        .then(res => {
+          this.stock = res.data
+          this.timer = setTimeout(() => {
+            this.getStock()
+          }, 5000)
+        })
+        .catch(e => {
+          this.timer = setTimeout(() => {
             this.getStock()
           }, 10000)
         })

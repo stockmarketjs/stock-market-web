@@ -13,7 +13,7 @@ export default {
       chartExtend: {
         series(v) {
           v.forEach(i => {
-            i.smooth = false
+            i.smooth = true
             i.showSymbol = false
           })
           return v

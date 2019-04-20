@@ -17,8 +17,13 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     config => config,
     error => {
-        // if (error.response.status === 500) alert('服务器出小差了')
-        return Promise.reject(error)
+        if (error.response.status === 401) {
+            alert('请登录之后, 再次操作');
+            return Promise.reject(error)
+        } else {
+            alert(error.response.data.message);
+            return Promise.reject(error)
+        }
     });
 
 export default axios
